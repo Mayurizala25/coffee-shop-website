@@ -20,6 +20,27 @@
   a:hover { color: #221A12; }
   ::selection { background: #E7C58F; color: #221A12; }
   @keyframes sp-drift { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* Keep the hero's scroll composition intact; tighten only the content below it. */
+  #story,
+  #beans,
+  #menu,
+  #cup,
+  #brew,
+  #visit { padding-top:clamp(32px,4vw,64px) !important; padding-bottom:clamp(32px,4vw,64px) !important; }
+  #story > div:last-child { margin-top:clamp(20px,3vw,36px) !important; }
+  #beans > div > div:first-child { margin-bottom:clamp(20px,3vw,36px) !important; }
+  #menu > div:first-child { margin-bottom:clamp(24px,3vw,40px) !important; }
+  #brew > div:first-child { margin-bottom:clamp(24px,3vw,40px) !important; }
+  #cup > div { gap:clamp(24px,3vw,44px) !important; }
+  section[data-screen-label="Drinks"] { padding-bottom:clamp(32px,4vw,64px) !important; }
+  section[data-screen-label="Reviews"] { padding-top:clamp(32px,4vw,64px) !important; padding-bottom:clamp(32px,4vw,64px) !important; }
+  section[data-screen-label="Instagram"] { padding-bottom:clamp(32px,4vw,64px) !important; }
+  section[data-screen-label="Closing"] { min-height:min(76vh,700px) !important; }
+  section[data-screen-label="Closing"] > div:first-child { min-height:min(56vh,500px) !important; }
+
+  image-slot { transition:transform .7s cubic-bezier(.22,.61,.36,1); }
+  @media (prefers-reduced-motion: reduce) { image-slot { transition:none; } }
 </style>
 <script src="./image-slot.js"></script>
 <script src="./cup-scene.js"></script>
@@ -44,7 +65,7 @@
 
 <!-- ─────────────  HERO: scroll-driven 3D  ───────────── -->
 <section id="top" data-screen-label="Hero" style="position:relative">
-  <div id="hero-track" style="height:420vh;position:relative">
+  <div id="hero-track" style="height:100vh;position:relative">
     <div style="position:sticky;top:0;height:100vh;overflow:hidden">
 
       <div style="position:absolute;inset:0;background:radial-gradient(120% 95% at 66% 34%,#FEFAF2 0%,#F4EDE0 46%,#E8DECB 100%)"></div>
@@ -132,9 +153,9 @@
   </div>
 
   <div data-reveal="1" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:18px;margin-top:clamp(40px,6vw,72px)">
-    <div style="position:relative;height:clamp(220px,26vw,340px);overflow:hidden;border-radius:4px"><image-slot id="sp-story-1" shape="rect" src="assets/latte-heart.jpg" placeholder="Roaster at work"></image-slot></div>
-    <div style="position:relative;height:clamp(220px,26vw,340px);margin-top:clamp(0px,4vw,52px);overflow:hidden;border-radius:4px"><image-slot id="sp-story-2" shape="rect" src="assets/latte-cream.jpg" placeholder="Counter, morning light"></image-slot></div>
-    <div style="position:relative;height:clamp(220px,26vw,340px);overflow:hidden;border-radius:4px"><image-slot id="sp-story-3" shape="rect" src="assets/espresso-crema.jpg" placeholder="Green beans, hands"></image-slot></div>
+    <div style="position:relative;height:clamp(220px,26vw,340px);overflow:hidden;border-radius:4px"><image-slot id="sp-story-1" shape="rect" fit="contain" src="assets/latte-heart.jpg" placeholder="Roaster at work"></image-slot></div>
+    <div style="position:relative;height:clamp(220px,26vw,340px);margin-top:clamp(0px,4vw,52px);overflow:hidden;border-radius:4px"><image-slot id="sp-story-2" shape="rect" fit="contain" src="assets/latte-cream.jpg" placeholder="Counter, morning light"></image-slot></div>
+    <div style="position:relative;height:clamp(220px,26vw,340px);overflow:hidden;border-radius:4px"><image-slot id="sp-story-3" shape="rect" fit="contain" src="assets/espresso-crema.jpg" placeholder="Green beans, hands"></image-slot></div>
   </div>
 </section>
 
@@ -207,7 +228,7 @@
     <sc-for list="{{ drinks }}" as="d" hint-placeholder-count="4">
       <figure data-reveal="1" style="margin:0">
         <div style="position:relative;aspect-ratio:3/4;overflow:hidden;border-radius:4px;background:#EFE6D6">
-          <image-slot id="{{ d.slot }}" shape="rect" src="{{ d.src }}" placeholder="{{ d.name }}"></image-slot>
+          <image-slot id="{{ d.slot }}" shape="rect" fit="contain" src="{{ d.src }}" placeholder="{{ d.name }}"></image-slot>
         </div>
         <figcaption style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:14px">
           <span style="font-size:16.5px">{{ d.name }}</span>
@@ -224,7 +245,7 @@
     <div data-reveal="1" style="position:relative;aspect-ratio:4/5;min-height:340px;border-radius:6px;overflow:hidden;background:radial-gradient(110% 90% at 60% 36%,#FDF8EF 0%,#F0E7D6 52%,#E1D5BF 100%)">
       <cup-scene mode="loop" style="position:absolute;inset:0"></cup-scene>
       <div style="position:absolute;right:18px;top:18px;width:clamp(96px,26%,148px);aspect-ratio:3/4;border-radius:4px;overflow:hidden;box-shadow:0 10px 30px rgba(52,38,24,.18);background:#EFE6D6">
-        <image-slot id="sp-cup-photo" shape="rect" placeholder="Drop a photo of the cup"></image-slot>
+        <image-slot id="sp-cup-photo" shape="rect" fit="contain" placeholder="Drop a photo of the cup"></image-slot>
       </div>
       <div style="position:absolute;left:22px;right:22px;bottom:20px;display:flex;justify-content:space-between;gap:12px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#7A6752;pointer-events:none">
         <span>Slowpour Keeper · 355 ml</span>
@@ -300,7 +321,7 @@
       </div>
     </div>
     <div data-reveal="1" style="position:relative;min-height:clamp(300px,36vw,460px);border-radius:6px;overflow:hidden;border:1px solid rgba(34,26,18,.14)">
-      <image-slot id="sp-map" shape="rect" placeholder="Drop a map screenshot of the shop"></image-slot>
+      <image-slot id="sp-map" shape="rect" fit="contain" placeholder="Drop a map screenshot of the shop"></image-slot>
     </div>
   </div>
 </section>
@@ -314,7 +335,7 @@
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(50%,180px),1fr));gap:6px;padding:0 6px">
     <sc-for list="{{ grams }}" as="g" hint-placeholder-count="6">
       <div style="position:relative;aspect-ratio:1/1;overflow:hidden">
-        <image-slot id="{{ g.slot }}" shape="rect" src="{{ g.src }}" placeholder="{{ g.label }}"></image-slot>
+        <image-slot id="{{ g.slot }}" shape="rect" fit="contain" src="{{ g.src }}" placeholder="{{ g.label }}"></image-slot>
       </div>
     </sc-for>
   </div>
@@ -530,8 +551,21 @@ class Component extends DCLogic {
       root.querySelectorAll('image-slot').forEach((el) => {
         const frame = el.parentElement;
         if (!frame) return;
-        frame.addEventListener('pointerenter', () => { el.dataset.hot = '1'; });
-        frame.addEventListener('pointerleave', () => { el.dataset.hot = ''; });
+        frame.addEventListener('pointerenter', () => {
+          el.dataset.hot = '1';
+          el.style.transform = 'scale(1.16)';
+        });
+        frame.addEventListener('pointermove', (e) => {
+          if (e.pointerType === 'touch') return;
+          const bounds = frame.getBoundingClientRect();
+          const x = ((e.clientX - bounds.left) / bounds.width - .5) * 2;
+          const y = ((e.clientY - bounds.top) / bounds.height - .5) * 2;
+          el.style.transform = 'translate(' + (x * 2).toFixed(2) + 'px,' + (y * 2).toFixed(2) + 'px) scale(1.16)';
+        });
+        frame.addEventListener('pointerleave', () => {
+          el.dataset.hot = '';
+          el.style.transform = 'scale(1.12)';
+        });
       });
       root.querySelectorAll('a[href^="#"], button').forEach((el) => {
         if (!el.textContent.trim()) return;
